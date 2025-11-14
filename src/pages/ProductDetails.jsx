@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ProductGallery from "../components/ProductGallery";
 import ProductInfo from "../components/ProductInfo";
 import Header from "../components/Header";
-import { products } from "../data/products";
+import { products } from "../components/Products";
 import ProductSpecs from "../components/ProductSpecs";
 
 export default function ProductDetails() {
