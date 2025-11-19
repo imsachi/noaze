@@ -1,39 +1,60 @@
-import { useState } from "react";
-import Header from "../components/Header";
-import CheckoutSummary from "../components/CheckoutSummary";
-import CheckoutAddressForm from "../components/CheckoutAddressForm";
-import CheckoutPayment from "../components/CheckoutPayment";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import AddressForm from "../components/AddressForm";
+import PaymentMethods from "../components/PaymentMethod";
+import CouponBox from "../components/CouponBox";
+import OrderSummary from "../components/OrderSummary";
+import api from "../api/axios";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Checkout() {
-  const [address, setAddress] = useState({
-    name: "",
-    phone: "",
-    street: "",
-    city: "",
-    pincode: "",
-    state: "",
-  });
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [coupon, setCoupon] = useState("");
+  const [discount, setDiscount] = useState(0);
 
-  const items = [
-    { id: 1, title: "Red Light Therapy Torch", qty: 1, price: 129.99 },
-    { id: 2, title: "Protective Case", qty: 1, price: 19.99 },
-  ];
+  useEffect(() => {
+    api.get(`/products/${id}`).then((res) => {
+      setProduct(res.data.product);
+    });
+  }, [id]);
+
+  if (!product) return <div className="p-10 text-center">Loading...</div>;
+
+  // Example delivery time
+  const deliveryDate = new Date();
+  deliveryDate.setDate(deliveryDate.getDate() + 4);
 
   return (
-    <>
-      <Header />
-      <main className="pt-28 pb-20 bg-gray-50 min-h-screen">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-          {/* Left column */}
-          <div className="md:col-span-2 space-y-8">
-            <CheckoutAddressForm address={address} setAddress={setAddress} />
-            <CheckoutPayment />
+    <div className="min-h-screen bg-gray-50 p-4 md:p-10">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6">
+          <Link to={`/product/${id}`}>
+            <ArrowLeft className="w-6 h-6" />
+          </Link>
+          <h1 className="text-3xl font-semibold">Checkout</h1>
+        </div>
+
+        {/* Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Left Section */}
+          <div className="md:col-span-2 space-y-6">
+            {/* Address */}
+            <AddressForm />
+
+            {/* Payment */}
           </div>
 
-          {/* Right column */}
-          <CheckoutSummary items={items} />
+          {/* Right Section */}
+          <OrderSummary
+            product={product}
+            discount={discount}
+            deliveryDate={deliveryDate}
+          />
         </div>
-      </main>
-    </>
+      </div>
+    </div>
   );
 }

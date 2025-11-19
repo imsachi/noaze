@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { User, ShoppingCart } from "lucide-react"; // <-- Lucide Icons
 
 export default function Header({ onOpenCart }) {
   const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
@@ -14,28 +16,37 @@ export default function Header({ onOpenCart }) {
         scrolled ? "backdrop-blur-md bg-white/60 shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto  py-4 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-linear-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white font-bold">
-            L
+      <div className="max-w-6xl mx-auto py-4 flex items-center justify-between px-4">
+        {/* LOGO */}
+        <a href="/" className="flex items-center">
+          <div
+            className="font-extrabold text-2xl md:text-4xl bg-linear-to-r 
+            via-purple-500 from-pink-500 to-white bg-clip-text text-transparent"
+          >
+            zustit
           </div>
-          <span className="font-semibold">Life in beta</span>
         </a>
-        <nav className="hidden md:flex gap-6 items-center text-sm">
-          <a href="#products" className="hover:underline">
+
+        {/* NAVBAR */}
+        <nav className="flex gap-6 items-center text-sm">
+          <a href="#products" className="hover:underline hidden md:block">
             Products
           </a>
-          <a href="#features" className="hover:underline">
-            Why it works
+
+          {/* PROFILE ICON */}
+          <a
+            href="/profile"
+            className="flex flex-col items-center text-white bg-violet-300 p-2 rounded-full  hover:text-black"
+          >
+            <User size={20} />
           </a>
-          <a href="#reviews" className="hover:underline">
-            Reviews
-          </a>
-          <a href="/profile" className="hover:underline">
-            Profile
-          </a>
-          <button onClick={onOpenCart} className="px-3 py-2 rounded-md border">
-            Cart
+
+          {/* CART ICON */}
+          <button
+            onClick={onOpenCart}
+            className="flex flex-col items-center text-white bg-violet-300 p-2 rounded-full hover:text-black"
+          >
+            <ShoppingCart size={20} />
           </button>
         </nav>
       </div>

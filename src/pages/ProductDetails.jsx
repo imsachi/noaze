@@ -1,20 +1,49 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../api/axios";
 import ProductGallery from "../components/ProductGallery";
 import ProductInfo from "../components/ProductInfo";
 import Header from "../components/Header";
-import { products } from "../components/Products";
-import ProductSpecs from "../components/ProductSpecs";
+import ProductSections from "../components/ProductSections";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const product = products.find((p) => p.id === parseInt(id)) || products[0];
+  const [product, setProduct] = useState(null);
+  console.log(product);
+  const [loading, setLoading] = useState(true);
 
-  const galleryImages = [
-    product.image,
-    "/images/product2.jpg",
-    "/images/product3.jpg",
-    "/images/product4.jpg",
-  ];
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const res = await api.get(`/products/${id}`);
+        setProduct(res.data.product);
+      } catch (error) {
+        console.log("Error fetching product", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProduct();
+  }, [id]);
+
+  if (loading)
+    return (
+      <div className="h-screen flex items-center justify-center text-xl">
+        Loading...
+      </div>
+    );
+
+  if (!product)
+    return (
+      <div className="h-screen flex items-center justify-center text-xl">
+        Product Not Found
+      </div>
+    );
+
+  // Gallery images → if backend provides array, use that
+  const galleryImages = product.images?.length
+    ? product.images
+    : [product.image];
 
   return (
     <>
@@ -24,7 +53,8 @@ export default function ProductDetails() {
           <ProductGallery images={galleryImages} />
           <ProductInfo product={product} />
         </div>
-        <ProductSpecs specs={product.specs} description={product.longDesc} />
+
+        <ProductSections sections={product.sections} />
       </main>
     </>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export default function ProductGallery({ images = [] }) {
+  console.log(images);
   const [selected, setSelected] = useState(0);
 
   return (
@@ -8,7 +9,7 @@ export default function ProductGallery({ images = [] }) {
       {/* Main image */}
       <div className="aspect-square w-full overflow-hidden rounded-2xl shadow-sm border">
         <img
-          src={images[selected]}
+          src={images[selected].url}
           alt="Product view"
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
@@ -24,7 +25,7 @@ export default function ProductGallery({ images = [] }) {
               i === selected ? "border-sky-500" : "border-transparent"
             }`}
           >
-            <img src={img} alt="" className="w-full h-full object-cover" />
+            <img src={img.url} alt="" className="w-full h-full object-cover" />
           </button>
         ))}
       </div>

@@ -12,28 +12,16 @@ export default function Hero() {
           >
             <source src="/videos/header-bg.mp4" type="video/mp4" />
           </video>
-          <div className="inline-flex items-center gap-3 bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs mb-4">
-            New • Blue Light Solutions
+          <div className="inline-flex items-center  bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs mb-4">
+            Longevity Starts Today
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-            Protect your eyes, sharpen your focus
+            Future of Healthy Living Starts Here.
           </h1>
-          <p className="mt-4 text-gray-600 max-w-xl">
-            High-performance blue-light blockers and workplace filters designed
-            for long hours at screens. Clinically-minded design, everyday
-            comfort.
+          <p className="mt-4 text-pink-100  max-w-xl">
+            Innovative wellness solutions built for modern lifestyles—to help
+            you feel better, look better, and live better.
           </p>
-          <div className="mt-6 flex gap-3">
-            <a
-              href="#products"
-              className="px-5 py-3 rounded-lg bg-sky-600 text-white font-medium shadow-lg"
-            >
-              Shop Products
-            </a>
-            <a href="#why" className="px-5 py-3 rounded-lg border">
-              Learn Why
-            </a>
-          </div>
         </div>
         <div className="flex-1 flex justify-center md:justify-end"></div>
       </div>
