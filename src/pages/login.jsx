@@ -22,7 +22,7 @@ export default function Login() {
       setUser(profile.data.user);
       navigate("/profile");
     } catch (err) {
-      setMsg(err.response?.data?.error || "Error");
+      setMsg(err.response?.data?.error || "Error"); //hghhh
     }
   };
 
