@@ -15,7 +15,7 @@ export default function Hero() {
           <div className="inline-flex items-center  bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs mb-4">
             Longevity Starts Today
           </div>
-          <h1 className=" md:text-7xl text-white font-extrabold leading-tight">
+          <h1 className=" text-7xl text-white font-extrabold leading-tight">
             Rewrite Your Biological Clock.
           </h1>
           <p className="mt-4 text-black font-semi-bold  max-w-xl">
