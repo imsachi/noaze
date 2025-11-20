@@ -4,14 +4,14 @@ import { AuthContext } from "../context/AuthContext";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
-export default function OrderSummary() {
+export default function OrderSummary({ addressSaved }) {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { cartItems, clearCart } = useContext(CartContext);
   const [billing, setBilling] = useState(null);
   const [loading, setLoading] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
-  console.log(billing);
+  useEffect(() => {}, [addressSaved]);
   // ----------------------------
   // ✅ Fetch Billing from Backend
   // ----------------------------
@@ -146,10 +146,16 @@ export default function OrderSummary() {
       {/* ---------------- Place Order Button ---------------- */}
       <button
         onClick={placeOrder}
-        disabled={loading}
-        className="mt-6 w-full bg-black text-white py-3 rounded-xl font-medium text-lg shadow-md hover:bg-gray-800 active:scale-95 transition-all disabled:bg-gray-400"
+        disabled={!addressSaved}
+        className={`mt-4 w-full py-3 rounded-lg text-white 
+      ${addressSaved ? "bg-black" : "bg-gray-400 cursor-not-allowed"}
+  `}
       >
-        {loading ? "Placing order..." : "Place Order"}
+        {addressSaved
+          ? loading
+            ? "Placing Order.."
+            : "Place Order"
+          : "Save Address To Continue"}
       </button>
     </div>
   );

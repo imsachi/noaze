@@ -20,7 +20,7 @@ export default function Auth() {
       const res = await api.post("/auth/login", form);
       const profile = await api.get("/auth/me");
       setUser(profile.data.user);
-      navigate("/profile");
+      navigate(-2);
     } catch (err) {
       setMsg(err.response?.data?.error || "Error"); //hghhh
     }

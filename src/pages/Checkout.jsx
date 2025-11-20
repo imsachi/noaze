@@ -1,19 +1,34 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import AddressForm from "../components/AddressForm";
 import PaymentMethods from "../components/PaymentMethod";
 import CouponBox from "../components/CouponBox";
 import OrderSummary from "../components/OrderSummary";
 import api from "../api/axios";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
 
 export default function Checkout() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState(null);
-  const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
 
+  // ------------------------
+  // 🔐 Check for token cookie
+  // ------------------------
+  useEffect(() => {
+    api
+      .get("/auth/me", { withCredentials: true })
+      .then(() => {
+        // user is authenticated
+      })
+      .catch(() => {
+        navigate("/register");
+      });
+  }, [navigate]);
+
+  // Fetch product
   useEffect(() => {
     api.get(`/products/${id}`).then((res) => {
       setProduct(res.data.product);
@@ -22,7 +37,7 @@ export default function Checkout() {
 
   if (!product) return <div className="p-10 text-center">Loading...</div>;
 
-  // Example delivery time
+  // Example delivery date
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 4);
 
@@ -39,15 +54,12 @@ export default function Checkout() {
 
         {/* Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Left Section */}
+          {/* Left */}
           <div className="md:col-span-2 space-y-6">
-            {/* Address */}
             <AddressForm />
-
-            {/* Payment */}
           </div>
-
-          {/* Right Section */}
+          <PaymentMethods />
+          {/* Right */}
           <OrderSummary
             product={product}
             discount={discount}

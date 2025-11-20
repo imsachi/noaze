@@ -15,12 +15,12 @@ export default function Hero() {
           <div className="inline-flex items-center  bg-indigo-50 text-indigo-700 rounded-full px-3 py-1 text-xs mb-4">
             Longevity Starts Today
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-            Future of Healthy Living Starts Here.
+          <h1 className="text-4xl md:text-7xl text-white font-extrabold leading-tight">
+            Rewrite Your Biological Clock.
           </h1>
-          <p className="mt-4 text-pink-100  max-w-xl">
-            Innovative wellness solutions built for modern lifestyles—to help
-            you feel better, look better, and live better.
+          <p className="mt-4 text-black font-semi-bold  max-w-xl">
+            Don't just age—evolve.Fueling your future self. We believe
+            sustainable health is the ultimate happiness.
           </p>
         </div>
         <div className="flex-1 flex justify-center md:justify-end"></div>

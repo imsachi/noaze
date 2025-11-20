@@ -38,12 +38,6 @@ export default function ProductInfo({ product }) {
           Buy Now
         </button>
       </div>
-
-      <ul className="mt-6 text-sm text-gray-500 space-y-2">
-        <li>✅ Free shipping on orders over ₹999</li>
-        <li>🔄 30-day returns guarantee</li>
-        <li>🕒 Ships in 24 hours</li>
-      </ul>
     </div>
   );
 }

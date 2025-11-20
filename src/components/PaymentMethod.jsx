@@ -17,6 +17,7 @@ export default function PaymentMethods() {
             type="radio"
             name="payment"
             value="card"
+            disabled
             checked={method === "card"}
             onChange={() => setMethod("card")}
           />
@@ -29,6 +30,7 @@ export default function PaymentMethods() {
             type="radio"
             name="payment"
             value="upi"
+            disabled
             checked={method === "upi"}
             onChange={() => setMethod("upi")}
           />

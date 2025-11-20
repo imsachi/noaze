@@ -54,17 +54,39 @@ function SectionItem({ section }) {
               )}
 
               {/* Subsections */}
-              {section.items && (
-                <div className="space-y-3">
-                  {section.items.map((sub, i) => (
-                    <div key={i} className="mt-4">
-                      <h4 className="font-semibold text-gray-900">
-                        {sub.title}
-                      </h4>
-                      <p className="text-gray-600 mt-1">{sub.content}</p>
-                    </div>
-                  ))}
-                </div>
+              {section.heading === "Feature highlights" ? (
+                <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
+                  <tbody>
+                    {section.items.map((item, index) => (
+                      <tr
+                        key={index}
+                        className={`${
+                          index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                        }`}
+                      >
+                        <td className="p-3 font-medium border border-gray-300 w-1/3">
+                          {item.title}
+                        </td>
+                        <td className="p-3 border border-gray-300">
+                          {item.content}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                section.items && (
+                  <div className="space-y-3">
+                    {section.items.map((sub, i) => (
+                      <div key={i} className="mt-4">
+                        <h4 className="font-semibold text-gray-900">
+                          {sub.title}
+                        </h4>
+                        <p className="text-gray-600 mt-1">{sub.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                )
               )}
             </div>
           </motion.div>

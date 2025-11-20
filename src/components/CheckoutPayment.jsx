@@ -7,13 +7,13 @@ export default function CheckoutPayment() {
 
       <div className="space-y-3">
         <label className="flex items-center gap-3 cursor-pointer">
-          <input type="radio" name="payment" defaultChecked />
+          <input type="radio" name="payment" disabled />
           <CreditCard size={18} className="text-sky-600" />
           <span>Credit / Debit Card</span>
         </label>
 
         <label className="flex items-center gap-3 cursor-pointer">
-          <input type="radio" name="payment" />
+          <input type="radio" name="payment" disabled />
           <Wallet size={18} className="text-sky-600" />
           <span>UPI / Wallets</span>
         </label>
