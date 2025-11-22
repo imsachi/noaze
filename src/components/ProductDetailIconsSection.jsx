@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
-export default function InfoIconsSection() {
+export default function InfoIconsSection({ product }) {
   const [selected, setSelected] = useState(null);
 
   const items = [
@@ -13,15 +13,13 @@ export default function InfoIconsSection() {
       id: "return",
       label: "Return Policy",
       icon: return_policy_icon,
-      description:
-        "You can return products within 7 days if unused and in original condition.",
+      description: product.returnPolicy.conditions,
     },
     {
       id: "warranty",
       label: "Warranty",
       icon: warranty_icon,
-      description:
-        "This product comes with a 6‑month warranty covering manufacturing defects.",
+      description: product.warranty.terms,
     },
     {
       id: "cod",
@@ -33,7 +31,7 @@ export default function InfoIconsSection() {
   ];
 
   return (
-    <div className="flex items-center justify-around border border-gray-200 bg-gray-50 p-4 rounded-2xl h-36  relative ">
+    <div className="flex items-center justify-around border border-gray-200  p-4 rounded-2xl h-42 md:30 relative ">
       <AnimatePresence>
         {selected === null &&
           items.map((item, index) => (

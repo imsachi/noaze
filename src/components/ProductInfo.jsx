@@ -39,7 +39,7 @@ export default function ProductInfo({ product }) {
           Buy Now
         </button>
       </div>
-      <InfoIconsSection />
+      <InfoIconsSection product={product} />
     </div>
   );
 }
