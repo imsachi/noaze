@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 
-export default function AddressComponent() {
+export default function AddressComponent({ onAddressSaved }) {
   const { user, setUser } = useContext(AuthContext);
 
   const [formVisible, setFormVisible] = useState(true);
@@ -47,7 +47,7 @@ export default function AddressComponent() {
       });
 
       setUser({ ...user, addresses: res.data.addresses });
-
+      onAddressSaved();
       setFormVisible(false);
     } catch (err) {
       alert("Failed to save address");

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import InfoIconsSection from "./ProductDetailIconsSection";
 
 export default function ProductInfo({ product }) {
   const { addToCart } = useContext(CartContext);
@@ -33,11 +34,12 @@ export default function ProductInfo({ product }) {
         </button>
         <button
           onClick={handleBuyNow}
-          className="px-6 py-3 rounded-xl bg-sky-600 text-white font-medium hover:bg-sky-700 transition"
+          className="px-6 py-3 rounded-xl bg-linear-60 from-violet-300 to-sky-600 text-white font-medium hover:bg-sky-700 transition"
         >
           Buy Now
         </button>
       </div>
+      <InfoIconsSection />
     </div>
   );
 }

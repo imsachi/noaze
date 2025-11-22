@@ -11,6 +11,7 @@ export default function OrderSummary({ addressSaved }) {
   const [billing, setBilling] = useState(null);
   const [loading, setLoading] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
+  console.log(addressSaved, "444444");
   useEffect(() => {}, [addressSaved]);
   // ----------------------------
   // ✅ Fetch Billing from Backend

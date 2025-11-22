@@ -13,7 +13,8 @@ export default function Checkout() {
 
   const [product, setProduct] = useState(null);
   const [discount, setDiscount] = useState(0);
-
+  const [addressSaved, setAddressSaved] = useState(false);
+  console.log(addressSaved, "gggggggg");
   // ------------------------
   // 🔐 Check for token cookie
   // ------------------------
@@ -56,7 +57,7 @@ export default function Checkout() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left */}
           <div className="md:col-span-2 space-y-6">
-            <AddressForm />
+            <AddressForm onAddressSaved={() => setAddressSaved(true)} />
           </div>
           <PaymentMethods />
           {/* Right */}
@@ -64,6 +65,7 @@ export default function Checkout() {
             product={product}
             discount={discount}
             deliveryDate={deliveryDate}
+            addressSaved={addressSaved}
           />
         </div>
       </div>

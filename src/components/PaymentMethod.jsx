@@ -2,17 +2,17 @@ import { CreditCard, Wallet, IndianRupee } from "lucide-react";
 import { useState } from "react";
 
 export default function PaymentMethods() {
-  const [method, setMethod] = useState("card");
+  const [method, setMethod] = useState("cod");
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-sm border">
+    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-400">
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
         <CreditCard className="w-5 h-5" />
         Payment Method
       </h2>
 
       <div className="space-y-4">
-        <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer">
+        <label className="flex items-center gap-3 p-4 border border-gray-400 rounded-lg cursor-pointer">
           <input
             type="radio"
             name="payment"
@@ -25,7 +25,7 @@ export default function PaymentMethods() {
           Debit / Credit Card
         </label>
 
-        <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer">
+        <label className="flex items-center gap-3 p-4 border border-gray-400 rounded-lg cursor-pointer">
           <input
             type="radio"
             name="payment"
@@ -38,7 +38,7 @@ export default function PaymentMethods() {
           UPI (Google Pay / PhonePe / Paytm)
         </label>
 
-        <label className="flex items-center gap-3 p-4 border rounded-lg cursor-pointer">
+        <label className="flex items-center gap-3 p-4 border border-gray-400 rounded-lg cursor-pointer">
           <input
             type="radio"
             name="payment"
