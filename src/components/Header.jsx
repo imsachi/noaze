@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { User, ShoppingCart } from "lucide-react"; // <-- Lucide Icons
+import logo from "../assets/noaze.svg";
 
 export default function Header({ onOpenCart }) {
   const [scrolled, setScrolled] = useState(false);
@@ -18,13 +19,8 @@ export default function Header({ onOpenCart }) {
     >
       <div className="max-w-6xl mx-auto py-4 flex items-center justify-between px-4">
         {/* LOGO */}
-        <a href="/" className="flex items-center">
-          <div
-            className="font-extrabold text-2xl md:text-4xl bg-linear-to-r 
-            via-purple-500 from-pink-500 to-white bg-clip-text text-transparent"
-          >
-            zustit
-          </div>
+        <a href="/" className="flex items-center ml-2">
+          <img src={logo} width={80} height={80}></img>
         </a>
 
         {/* NAVBAR */}
