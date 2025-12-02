@@ -1,4 +1,4 @@
-const API_URL = "https://zustit.com/api/products";
+const API_URL = "https://noaze.com/api/products";
 
 export const getProducts = async () => {
   const res = await fetch(API_URL);
