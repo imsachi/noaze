@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OrderSuccess from "./pages/OrderSuccess";
 import Auth from "./pages/Auth";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </Router>
   );
