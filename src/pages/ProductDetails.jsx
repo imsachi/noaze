@@ -9,7 +9,7 @@ import ProductSections from "../components/ProductSections";
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  console.log(product);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

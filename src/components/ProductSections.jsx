@@ -14,7 +14,7 @@ export default function ProductDetailsSections({ sections }) {
 
 function SectionItem({ section }) {
   const [open, setOpen] = useState(false);
-  console.log(section);
+
   return (
     <div className="border-b border-gray-400 rounded shadow-xs bg-white  overflow-hidden">
       {/* Header */}

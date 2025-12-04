@@ -4,14 +4,14 @@ import { AuthContext } from "../context/AuthContext";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
-export default function OrderSummary({ addressSaved }) {
+export default function OrderSummary({ addressSaved, cartItems }) {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const { cartItems, clearCart } = useContext(CartContext);
+  const { clearCart } = useContext(CartContext);
   const [billing, setBilling] = useState(null);
   const [loading, setLoading] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
-  console.log(addressSaved, "444444");
+
   useEffect(() => {}, [addressSaved]);
   // ----------------------------
   // ✅ Fetch Billing from Backend

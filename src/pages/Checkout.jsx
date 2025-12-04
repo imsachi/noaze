@@ -1,33 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import AddressForm from "../components/AddressForm";
 import PaymentMethods from "../components/PaymentMethod";
-import CouponBox from "../components/CouponBox";
 import OrderSummary from "../components/OrderSummary";
 import api from "../api/axios";
 import { ArrowLeft } from "lucide-react";
+import RegisterModal from "../components/RegisterModal";
+import { CartContext } from "../context/CartContext";
 
 export default function Checkout() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { cartItems, clearCart } = useContext(CartContext);
+  console.log(cartItems, "ff");
 
   const [product, setProduct] = useState(null);
   const [discount, setDiscount] = useState(0);
   const [addressSaved, setAddressSaved] = useState(false);
-  console.log(addressSaved, "gggggggg");
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+
   // ------------------------
-  // 🔐 Check for token cookie
+  // 🔐 Token check
   // ------------------------
   useEffect(() => {
     api
       .get("/auth/me", { withCredentials: true })
       .then(() => {
-        // user is authenticated
+        // Logged in
       })
       .catch(() => {
-        navigate("/register");
+        setShowRegisterModal(true); // instead of navigate()
       });
-  }, [navigate]);
+  }, []);
 
   // Fetch product
   useEffect(() => {
@@ -38,7 +41,6 @@ export default function Checkout() {
 
   if (!product) return <div className="p-10 text-center">Loading...</div>;
 
-  // Example delivery date
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 4);
 
@@ -53,22 +55,29 @@ export default function Checkout() {
           <h1 className="text-3xl font-semibold">Checkout</h1>
         </div>
 
-        {/* Layout */}
+        {/* Main Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left */}
           <div className="md:col-span-2 space-y-6">
             <AddressForm onAddressSaved={() => setAddressSaved(true)} />
           </div>
+
           <PaymentMethods />
+
           {/* Right */}
           <OrderSummary
             product={product}
+            cartItems={cartItems}
             discount={discount}
             deliveryDate={deliveryDate}
             addressSaved={addressSaved}
           />
         </div>
       </div>
+
+      {showRegisterModal && (
+        <RegisterModal onClose={() => setShowRegisterModal(false)} />
+      )}
     </div>
   );
 }

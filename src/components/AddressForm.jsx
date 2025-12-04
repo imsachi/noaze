@@ -7,7 +7,16 @@ export default function AddressComponent({ onAddressSaved }) {
 
   const [formVisible, setFormVisible] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  useEffect(() => {
+    if (user) {
+      setForm((prev) => ({
+        ...prev,
+        fullName: user.name || "",
+        mobile: user.mobile || "",
+        email: user.email || "",
+      }));
+    }
+  }, [user]);
   const [form, setForm] = useState({
     fullName: user?.name || "",
     mobile: user?.mobile || "",
