@@ -9,7 +9,6 @@ export default function ProductGrid() {
     getProducts().then((data) => setProducts(data));
   }, []);
 
-  console.log(products);
   return (
     <section id="products" className="py-16 bg-gray-50">
       <div className="max-w-6xl mx-auto px-6">

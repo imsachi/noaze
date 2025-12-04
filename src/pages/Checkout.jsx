@@ -11,7 +11,6 @@ import { CartContext } from "../context/CartContext";
 export default function Checkout() {
   const { id } = useParams();
   const { cartItems, clearCart } = useContext(CartContext);
-  console.log(cartItems, "ff");
 
   const [product, setProduct] = useState(null);
   const [discount, setDiscount] = useState(0);

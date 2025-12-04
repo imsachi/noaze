@@ -1,22 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import api from "../api/axios";
-import { AuthContext } from "../context/AuthContext";
 
 export default function AddressComponent({ onAddressSaved }) {
-  const { user, setUser } = useContext(AuthContext);
-
+  const [user, setUser] = useState(null);
   const [formVisible, setFormVisible] = useState(true);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (user) {
-      setForm((prev) => ({
-        ...prev,
-        fullName: user.name || "",
-        mobile: user.mobile || "",
-        email: user.email || "",
-      }));
-    }
-  }, [user]);
   const [form, setForm] = useState({
     fullName: user?.name || "",
     mobile: user?.mobile || "",
@@ -28,6 +16,27 @@ export default function AddressComponent({ onAddressSaved }) {
     addressLine2: "",
     landmark: "",
   });
+  useEffect(() => {
+    getAddress();
+  }, []);
+  const getAddress = async () => {
+    try {
+      const profile = await api.get("/auth/me");
+      setForm({
+        fullName: profile.data.user?.name || "",
+        mobile: profile.data.user?.mobile || "",
+        email: profile.data.user?.email || "",
+        pincode: "",
+        state: "",
+        city: "",
+        addressLine1: "",
+        addressLine2: "",
+        landmark: "",
+      });
+    } catch (err) {
+      setMsg(err.response?.data?.error || "Error"); //hghhh
+    }
+  };
 
   const saveAddress = async () => {
     // required fields except optional ones
