@@ -4,12 +4,14 @@ import AddressForm from "../components/AddressForm";
 import PaymentMethods from "../components/PaymentMethod";
 import OrderSummary from "../components/OrderSummary";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import RegisterModal from "../components/RegisterModal";
 import { CartContext } from "../context/CartContext";
 import CheckoutCartItems from "../components/CheckoutCartItems";
 
 export default function Checkout() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { cartItems, clearCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);
@@ -48,9 +50,9 @@ export default function Checkout() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <Link to={`/product/${id}`}>
+          <button onClick={() => navigate(-1)}>
             <ArrowLeft className="w-6 h-6" />
-          </Link>
+          </button>
           <h1 className="text-3xl font-semibold">Checkout</h1>
         </div>
 
