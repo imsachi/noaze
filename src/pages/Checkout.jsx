@@ -7,11 +7,11 @@ import api from "../api/axios";
 import { ArrowLeft } from "lucide-react";
 import RegisterModal from "../components/RegisterModal";
 import { CartContext } from "../context/CartContext";
+import CheckoutCartItems from "../components/CheckoutCartItems";
 
 export default function Checkout() {
   const { id } = useParams();
   const { cartItems, clearCart } = useContext(CartContext);
-
   const [product, setProduct] = useState(null);
   const [discount, setDiscount] = useState(0);
   const [addressSaved, setAddressSaved] = useState(false);
@@ -57,6 +57,8 @@ export default function Checkout() {
         {/* Main Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left */}
+          {/* ➤ Cart Items Section */}
+          <CheckoutCartItems />
           <div className="md:col-span-2 space-y-6">
             <AddressForm onAddressSaved={() => setAddressSaved(true)} />
           </div>

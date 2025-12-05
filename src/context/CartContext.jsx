@@ -42,8 +42,18 @@ export default function CartProvider({ children }) {
   // ----------------------------------------
   // Remove item
   // ----------------------------------------
-  const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((i) => i._id !== id));
+  const removeFromCart = (product, qty = 1) => {
+    setCartItems((prev) => {
+      const exists = prev.find((item) => item._id === product._id);
+
+      if (exists) {
+        return prev.map((item) =>
+          item._id === product._id ? { ...item, qty: item.qty - qty } : item
+        );
+      }
+
+      return [...prev, { ...product, qty }];
+    });
   };
 
   // ----------------------------------------

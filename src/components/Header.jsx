@@ -17,7 +17,7 @@ export default function Header({ onOpenCart }) {
         scrolled ? "backdrop-blur-md bg-white/60 shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto py-4 flex items-center justify-between px-4">
+      <div className="max-w-6xl mx-auto  flex items-center justify-between px-4">
         {/* LOGO */}
         <a href="/" className="flex items-center ml-2">
           <img src={logo} width={80} height={80}></img>
