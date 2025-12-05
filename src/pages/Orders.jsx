@@ -10,7 +10,7 @@ export default function Orders() {
     const loadOrders = async () => {
       try {
         const res = await api.get("/orders/my-orders"); // modify to your route
-        console.log(res.data.orders);
+
         setOrders(res.data.orders);
       } catch (err) {
         console.error("Error fetching orders", err);

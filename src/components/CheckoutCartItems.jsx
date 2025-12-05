@@ -21,7 +21,6 @@ export default function CheckoutCartItems() {
           className="flex items-center gap-4 p-3 border-b last:border-none"
         >
           {/* Product Image */}
-          {console.log(item)}
 
           <img
             src={item.images[0].url}

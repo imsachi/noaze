@@ -7,7 +7,7 @@ export default function Register({ onClose }) {
   const [displayForm, setDisplayForm] = useState("register");
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { setUser } = useContext(AuthContext);
   const previousPage = location.state?.from || "/";
 
   const [form, setForm] = useState({
@@ -24,9 +24,11 @@ export default function Register({ onClose }) {
     e.preventDefault();
 
     try {
-      await api.post("/auth/register", form);
+      const res = await api.post("/auth/register", form);
 
       setMsg("Registration successful!");
+
+      setUser(res.data.user);
       setSuccess(true);
 
       // Redirect to previous page after 1.5 sec

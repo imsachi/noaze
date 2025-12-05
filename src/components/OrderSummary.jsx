@@ -16,8 +16,6 @@ export default function OrderSummary({ addressSaved, cartItems }) {
   // ✅ Fetch Billing from Backend
   // ----------------------------
   useEffect(() => {
-    console.log("what the fuck....");
-    console.log(user);
     if (!user || cartItems.length === 0) return;
 
     const fetchBilling = async () => {
