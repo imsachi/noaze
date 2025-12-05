@@ -16,14 +16,14 @@ export default function CartProvider({ children }) {
   }, []);
 
   // ----------------------------------------
-  // ✅ Save cart to localStorage on change
+  // ✅ Save cart to localStorage whenever cart changes
   // ----------------------------------------
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
   // ----------------------------------------
-  // Add item
+  // ✅ Add item to cart (increase qty if exists)
   // ----------------------------------------
   const addToCart = (product, qty = 1) => {
     setCartItems((prev) => {
@@ -40,28 +40,38 @@ export default function CartProvider({ children }) {
   };
 
   // ----------------------------------------
-  // Remove item
+  // ✅ Decrease qty OR remove item completely
   // ----------------------------------------
   const removeFromCart = (product, qty = 1) => {
     setCartItems((prev) => {
       const exists = prev.find((item) => item._id === product._id);
+      if (!exists) return prev;
 
-      if (exists) {
-        return prev.map((item) =>
-          item._id === product._id ? { ...item, qty: item.qty - qty } : item
-        );
+      // If qty becomes 0 → remove the item fully
+      if (exists.qty - qty <= 0) {
+        return prev.filter((item) => item._id !== product._id);
       }
 
-      return [...prev, { ...product, qty }];
+      // Otherwise reduce qty
+      return prev.map((item) =>
+        item._id === product._id ? { ...item, qty: item.qty - qty } : item
+      );
     });
   };
 
   // ----------------------------------------
-  // Clear cart
+  // ❌ Remove item instantly (no qty logic)
+  // ----------------------------------------
+  const removeItemCompletely = (productId) => {
+    setCartItems((prev) => prev.filter((item) => item._id !== productId));
+  };
+
+  // ----------------------------------------
+  // Clear all cart items
   // ----------------------------------------
   const clearCart = () => {
     setCartItems([]);
-    localStorage.removeItem("cart"); // optional
+    localStorage.removeItem("cart");
   };
 
   return (
@@ -70,6 +80,7 @@ export default function CartProvider({ children }) {
         cartItems,
         addToCart,
         removeFromCart,
+        removeItemCompletely,
         clearCart,
       }}
     >

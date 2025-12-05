@@ -12,7 +12,7 @@ export default function CheckoutCartItems() {
     );
 
   return (
-    <div className="p-4 bg-white border rounded-xl shadow-sm space-y-4">
+    <div className="p-4 bg-white border rounded-xl  space-y-4">
       <h2 className="text-xl font-semibold mb-2">Cart Items</h2>
 
       {cartItems.map((item) => (

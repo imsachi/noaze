@@ -8,9 +8,12 @@ export default function ProductInfo({ product }) {
   if (!product) return null;
   const navigate = useNavigate();
 
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
   const handleBuyNow = () => {
     addToCart(product, 1);
-    navigate(`/checkout/${product._id}`); // 👈 send product ID
+    navigate(`/checkout`); // 👈 send product ID
   };
 
   return (
@@ -29,7 +32,10 @@ export default function ProductInfo({ product }) {
       </p>
 
       <div className="flex gap-3">
-        <button className="px-6 py-3 rounded-xl border border-sky-600  text-sky-800 font-medium hover:bg-sky-700 transition">
+        <button
+          onClick={handleAddToCart}
+          className="px-6 py-3 rounded-xl border border-sky-600  text-sky-800 font-medium hover:bg-sky-700 transition"
+        >
           Add to Cart
         </button>
         <button

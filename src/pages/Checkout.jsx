@@ -32,13 +32,13 @@ export default function Checkout() {
   }, []);
 
   // Fetch product
-  useEffect(() => {
-    api.get(`/products/${id}`).then((res) => {
-      setProduct(res.data.product);
-    });
-  }, [id]);
+  // useEffect(() => {
+  //   api.get(`/products/${id}`).then((res) => {
+  //     setProduct(res.data.product);
+  //   });
+  // }, [id]);
 
-  if (!product) return <div className="p-10 text-center">Loading...</div>;
+  // if (!product) return <div className="p-10 text-center">Loading...</div>;
 
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 4);

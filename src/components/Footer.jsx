@@ -25,7 +25,7 @@ const Footer = () => {
               <p>
                 <span className="font-semibold text-lg font-Poppins">
                   {" "}
-                  zustit{" "}
+                  noaze{" "}
                 </span>
                 <span>.com</span>
               </p>
