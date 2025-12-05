@@ -12,11 +12,12 @@ export default function OrderSummary({ addressSaved, cartItems }) {
   const [loading, setLoading] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
 
-  useEffect(() => {}, [addressSaved]);
   // ----------------------------
   // ✅ Fetch Billing from Backend
   // ----------------------------
   useEffect(() => {
+    console.log("what the fuck....");
+    console.log(user);
     if (!user || cartItems.length === 0) return;
 
     const fetchBilling = async () => {
