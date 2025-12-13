@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import InfoIconsSection from "./ProductDetailIconsSection";
+import DeliveryCheck from "./DeliveryCheck";
 
 export default function ProductInfo({ product }) {
   const { addToCart } = useContext(CartContext);
@@ -30,7 +31,9 @@ export default function ProductInfo({ product }) {
       <p className="text-gray-600 leading-relaxed max-w-md">
         {product.description}
       </p>
-
+      <div>
+        <DeliveryCheck />
+      </div>
       <div className="flex gap-3">
         <button
           onClick={handleAddToCart}

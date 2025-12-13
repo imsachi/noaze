@@ -48,7 +48,7 @@ export default function OrderSummary({ addressSaved, cartItems }) {
   // ----------------------------
   const placeOrder = async () => {
     if (!billing) return alert("Billing is not ready yet.");
-
+    console.log(user);
     try {
       setLoading(true);
 
