@@ -1,14 +1,17 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import api from "../api/axios";
 
 export default function AddressComponent({ onAddressSaved }) {
   const [user, setUser] = useState(null);
   const [formVisible, setFormVisible] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [pinLoading, setPinLoading] = useState(false);
+  const [pinError, setPinError] = useState("");
+
   const [form, setForm] = useState({
-    fullName: user?.name || "",
-    mobile: user?.mobile || "",
-    email: user?.email || "",
+    fullName: "",
+    mobile: "",
+    email: "",
     pincode: "",
     state: "",
     city: "",
@@ -16,30 +19,59 @@ export default function AddressComponent({ onAddressSaved }) {
     addressLine2: "",
     landmark: "",
   });
+
   useEffect(() => {
     getAddress();
   }, []);
+
   const getAddress = async () => {
     try {
       const profile = await api.get("/auth/me");
-      setForm({
+      setForm((prev) => ({
+        ...prev,
         fullName: profile.data.user?.name || "",
         mobile: profile.data.user?.mobile || "",
         email: profile.data.user?.email || "",
-        pincode: "",
-        state: "",
-        city: "",
-        addressLine1: "",
-        addressLine2: "",
-        landmark: "",
-      });
+      }));
     } catch (err) {
-      setMsg(err.response?.data?.error || "Error"); //hghhh
+      console.error("Profile fetch failed");
+    }
+  };
+
+  // -----------------------------
+  // 📍 Check pincode automatically
+  // -----------------------------
+  const checkPincode = async (pin) => {
+    if (pin.length !== 6) return;
+
+    setPinLoading(true);
+    setPinError("");
+
+    try {
+      const res = await api.get("/store/check-pincode", {
+        params: { pin },
+      });
+
+      const postal = res.data?.delivery_codes?.[0]?.postal_code;
+
+      if (!postal) {
+        setPinError("Pincode not serviceable");
+        return;
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        city: postal.district || "",
+        state: postal.state_code || postal.district || "",
+      }));
+    } catch (err) {
+      setPinError("Pincode not serviceable");
+    } finally {
+      setPinLoading(false);
     }
   };
 
   const saveAddress = async () => {
-    // required fields except optional ones
     const requiredFields = [
       "fullName",
       "mobile",
@@ -50,83 +82,116 @@ export default function AddressComponent({ onAddressSaved }) {
       "addressLine1",
     ];
 
-    // Check if any required field is empty
     const emptyField = requiredFields.find((field) => !form[field]?.trim());
 
     if (emptyField) {
       alert(`Please fill the ${emptyField} field.`);
-      return; // stop execution
+      return;
     }
 
     setLoading(true);
     try {
+      console.log("fuck1");
       const res = await api.post("/users/address", form, {
         withCredentials: true,
       });
-
+      console.log(res.data);
       setUser({ ...user, addresses: res.data.addresses });
       onAddressSaved();
       setFormVisible(false);
-    } catch (err) {
+    } catch {
       alert("Failed to save address");
     }
     setLoading(false);
   };
 
-  if (!formVisible && user?.addresses?.length > 0) {
-    const addr = user.addresses[user.addresses.length - 1];
-
-    return (
-      <div className="border rounded-xl p-4 bg-white ">
-        <h3 className="text-lg font-semibold mb-2">Delivery Address</h3>
-
-        <p className="text-gray-700">{addr.fullName}</p>
-        <p className="text-gray-700">{addr.addressLine1}</p>
-        <p className="text-gray-700">{addr.addressLine2}</p>
-        <p className="text-gray-700">
-          {addr.city}, {addr.state} - {addr.pincode}
-        </p>
-        <p className="text-gray-700">Mobile: {addr.mobile}</p>
-
-        <button
-          onClick={() => setFormVisible(true)}
-          className="mt-4 px-4 py-2 bg-black text-white rounded-lg"
-        >
-          Edit Address
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="bg-white p-6 rounded-xl  space-y-4">
+    <div className="bg-white p-6 rounded-xl space-y-4">
       <h3 className="text-xl font-semibold">Add Delivery Address</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {[
-          { key: "fullName", label: "Full Name" },
-          { key: "mobile", label: "Mobile Number" },
-          { key: "email", label: "Email" },
-          { key: "pincode", label: "Pincode" },
-          { key: "state", label: "State" },
-          { key: "city", label: "City" },
-          { key: "addressLine1", label: "Address Line 1" },
-          { key: "addressLine2", label: "Address Line 2" },
-          { key: "landmark", label: "Landmark (Optional)" },
-        ].map((f) => (
+        <input
+          placeholder="Full Name"
+          className="border p-3 rounded-lg"
+          value={form.fullName}
+          onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+        />
+
+        <input
+          placeholder="Mobile Number"
+          className="border p-3 rounded-lg"
+          value={form.mobile}
+          onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+        />
+
+        <input
+          placeholder="Email"
+          className="border p-3 rounded-lg"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+
+        {/* 📍 PINCODE */}
+        <div>
           <input
-            key={f.key}
-            placeholder={f.label}
+            placeholder="Pincode"
+            maxLength={6}
             className="border p-3 rounded-lg w-full"
-            onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
-            value={form[f.key]}
+            value={form.pincode}
+            onChange={(e) => {
+              const pin = e.target.value.replace(/\D/g, "");
+              setForm({ ...form, pincode: pin });
+              checkPincode(pin);
+            }}
           />
-        ))}
+          {pinLoading && (
+            <p className="text-sm text-gray-500 mt-1">
+              Checking serviceability…
+            </p>
+          )}
+          {pinError && <p className="text-sm text-red-500 mt-1">{pinError}</p>}
+        </div>
+
+        <input
+          placeholder="State"
+          className="border p-3 rounded-lg"
+          value={form.state}
+          readOnly
+        />
+
+        <input
+          placeholder="City"
+          className="border p-3 rounded-lg"
+          value={form.city}
+          readOnly
+        />
+
+        <input
+          placeholder="Address Line 1"
+          className="border p-3 rounded-lg col-span-2"
+          value={form.addressLine1}
+          onChange={(e) => setForm({ ...form, addressLine1: e.target.value })}
+        />
+
+        <input
+          placeholder="Address Line 2"
+          className="border p-3 rounded-lg col-span-2"
+          value={form.addressLine2}
+          onChange={(e) => setForm({ ...form, addressLine2: e.target.value })}
+        />
+
+        <input
+          placeholder="Landmark (Optional)"
+          className="border p-3 rounded-lg col-span-2"
+          value={form.landmark}
+          onChange={(e) => setForm({ ...form, landmark: e.target.value })}
+        />
       </div>
 
       <button
         onClick={saveAddress}
-        className="mt-4 w-full bg-black text-white py-3 rounded-xl text-lg"
+        disabled={loading || pinError}
+        className="mt-4 w-full bg-black text-white py-3 rounded-xl text-lg disabled:opacity-60"
       >
         {loading ? "Saving..." : "Save & Continue"}
       </button>

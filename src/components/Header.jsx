@@ -41,14 +41,17 @@ export default function Header({ onOpenCart }) {
 
         {/* NAVBAR */}
         <nav className="flex gap-6 items-center text-sm">
-          <a href="#products" className="hover:underline hidden md:block">
-            Products
+          <a
+            href="/about"
+            className="hover:underline hidden md:block font-bold"
+          >
+            About Noaze
           </a>
 
           {/* PROFILE ICON */}
           <a
             href="/profile"
-            className="flex flex-col items-center text-white bg-violet-300 p-2 rounded-full hover:text-black"
+            className="flex flex-col items-center text-white bg-gray-900 p-2 rounded-full hover:text-black"
           >
             <User size={20} />
           </a>
@@ -56,7 +59,7 @@ export default function Header({ onOpenCart }) {
           {/* CART ICON + BADGE */}
           <button
             onClick={() => navigate("/checkout")}
-            className="relative flex flex-col items-center text-white bg-violet-300 p-2 rounded-full hover:text-black"
+            className="relative flex flex-col items-center text-white bg-violet-500 p-2 rounded-full hover:text-black"
           >
             <ShoppingCart size={20} />
 

@@ -4,7 +4,7 @@ export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
-
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
   // ----------------------------------------
   // ✅ Load cart from localStorage on refresh
   // ----------------------------------------
@@ -13,12 +13,14 @@ export default function CartProvider({ children }) {
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
     }
+    setIsCartLoaded(true);
   }, []);
 
   // ----------------------------------------
   // ✅ Save cart to localStorage whenever cart changes
   // ----------------------------------------
   useEffect(() => {
+    if (!isCartLoaded) return;
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
@@ -70,6 +72,7 @@ export default function CartProvider({ children }) {
   // Clear all cart items
   // ----------------------------------------
   const clearCart = () => {
+    console.log("fjc");
     setCartItems([]);
     localStorage.removeItem("cart");
   };

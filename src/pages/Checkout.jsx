@@ -9,6 +9,7 @@ import { ArrowLeft } from "lucide-react";
 import RegisterModal from "../components/RegisterModal";
 import { CartContext } from "../context/CartContext";
 import CheckoutCartItems from "../components/CheckoutCartItems";
+import DeliveryAddress from "./DeliveryAddress";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -18,20 +19,20 @@ export default function Checkout() {
   const [discount, setDiscount] = useState(0);
   const [addressSaved, setAddressSaved] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-
+  const [deliveryAddress, SetDeliveryAddress] = useState(null);
   // ------------------------
   // 🔐 Token check
   // ------------------------
   useEffect(() => {
     api
       .get("/auth/me", { withCredentials: true })
-      .then(() => {
-        // Logged in
+      .then((res) => {
+        SetDeliveryAddress(res.data.user?.addresses[0]);
       })
       .catch(() => {
         setShowRegisterModal(true); // instead of navigate()
       });
-  }, []);
+  }, [addressSaved]);
 
   // Fetch product
   // useEffect(() => {
@@ -60,9 +61,22 @@ export default function Checkout() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left */}
           {/* ➤ Cart Items Section */}
+
           <CheckoutCartItems />
+          {addressSaved && (
+            <DeliveryAddress
+              address={deliveryAddress}
+              onEdit={() => setAddressSaved(false)}
+            />
+          )}
           <div className="md:col-span-2 space-y-6">
-            <AddressForm onAddressSaved={() => setAddressSaved(true)} />
+            {!addressSaved && (
+              <AddressForm
+                onAddressSaved={() => {
+                  setAddressSaved(true);
+                }}
+              />
+            )}
           </div>
 
           <PaymentMethods />
@@ -77,7 +91,7 @@ export default function Checkout() {
           />
         </div>
       </div>
-
+      {console.log(showRegisterModal, "fuck")}
       {showRegisterModal && (
         <RegisterModal onClose={() => setShowRegisterModal(false)} />
       )}

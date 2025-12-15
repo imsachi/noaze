@@ -10,12 +10,14 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OrderSuccess from "./pages/OrderSuccess";
 import Auth from "./pages/Auth";
 import Orders from "./pages/Orders";
+import AboutNoaze from "./pages/AboutNoaze";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutNoaze />} />
         <Route path="/product/:id" element={<ProductDetails />} />
 
         <Route path="/checkout" element={<Checkout />} />

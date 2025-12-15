@@ -5,6 +5,7 @@ import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
 export default function OrderSummary({ addressSaved, cartItems }) {
+  console.log(addressSaved);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { clearCart } = useContext(CartContext);

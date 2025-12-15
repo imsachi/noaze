@@ -3,7 +3,7 @@ import { CartContext } from "../context/CartContext";
 
 export default function CheckoutCartItems() {
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
-
+  console.log(cartItems);
   if (!cartItems || cartItems.length === 0)
     return (
       <div className="p-4 bg-white border rounded-xl shadow-sm text-center">
